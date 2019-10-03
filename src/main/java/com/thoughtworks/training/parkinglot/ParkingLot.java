@@ -1,27 +1,34 @@
 package com.thoughtworks.training.parkinglot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ParkingLot {
     private int capacity;
     private int availableSpace;
-    Object lastVehicle = new Object(); // Initialized with a dummy value
+    List<Object> vehicle = new ArrayList<>();
 
     public ParkingLot(int capacity) {
         this.capacity = capacity;
         this.availableSpace = capacity;
     }
 
-    public boolean park(Object nextVehicle) {
-
-
+    public boolean park(Object nextVehicle) throws ParkingLotException {
         if (availableSpace >= capacity) {
             availableSpace--;
-            lastVehicle = nextVehicle;
+            vehicle.add(nextVehicle);
             return true;
         }
-        if (nextVehicle.equals(lastVehicle)) {
-            throw new IllegalArgumentException("similar object can not allowed");
+
+        if (vehicle.contains(nextVehicle)) {
+            throw new ParkingLotException("similar object can not allowed");
         }
+        if(vehicle.size()<=capacity){
+            throw new ParkingLotException("capacity full");
+        }
+
         return false;
+
     }
 }
 
