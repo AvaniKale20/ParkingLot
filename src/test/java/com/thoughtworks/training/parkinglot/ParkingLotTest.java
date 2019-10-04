@@ -11,4 +11,11 @@ public class ParkingLotTest {
         assertDoesNotThrow(() -> parkingLot.park(new Object()));
     }
 
+    @Test
+    void givenParkingLot_WhenPark_ThenShouldNotPark() throws ParkingLotException {
+        ParkingLot parkingLot = new ParkingLot(2);
+        parkingLot.park(new Object());
+
+        assertDoesNotThrow(() -> parkingLot.park(new Object()));
+    }
 }
