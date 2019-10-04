@@ -42,6 +42,7 @@ public class ParkingLotTest {
     @Test
     void givenUnParkTheVehicle_ThenSholudReturnTwoVehicle() throws ParkingLotException {
         ParkingLot parkingLot = new ParkingLot(2);
+
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
         parkingLot.park(vehicleOne);
@@ -51,4 +52,22 @@ public class ParkingLotTest {
         assertEquals(vehicleTwo, parkingLot.unPark(vehicleTwo));
 
     }
+
+    @Test
+    void givenAddTwoVehicle_WhenUnParkSimilarVehicleFromParkingLot_ThenShouldThrowException() throws ParkingLotException {
+        ParkingLot parkingLot = new ParkingLot(2);
+
+        Object vehicleOne = new Object();
+        Object vehicleTwo = new Object();
+        parkingLot.park(vehicleOne);
+        parkingLot.park(vehicleTwo);
+
+        assertEquals(vehicleOne, parkingLot.unPark(vehicleOne));
+        assertEquals(vehicleTwo, parkingLot.unPark(vehicleTwo));
+
+        assertThrows(ParkingLotException.class, () -> parkingLot.unPark(vehicleTwo), "similar vehicle can not Unpark");
+
+
+    }
+
 }
