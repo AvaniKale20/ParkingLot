@@ -6,7 +6,7 @@ import java.util.List;
 public class ParkingLot {
     private int capacity;
     private int availableSpace;
-    List<Object> vehicle = new ArrayList<>();
+    public List<Object> vehicle = new ArrayList<>();
 
     public ParkingLot(int capacity) {
         this.capacity = capacity;
@@ -14,21 +14,31 @@ public class ParkingLot {
     }
 
     public boolean park(Object nextVehicle) throws ParkingLotException {
-        if (availableSpace >= capacity) {
-            availableSpace--;
+        if (isFull()) {
+            if (isAlreadyParked(nextVehicle))
+                throw new ParkingLotException("vehicle parked");
             vehicle.add(nextVehicle);
             return true;
         }
-
-        if (vehicle.contains(nextVehicle)) {
-            throw new ParkingLotException("similar object can not allowed");
-        }
-        if(vehicle.size()<=capacity){
-            throw new ParkingLotException("capacity full");
-        }
-
         return false;
+    }
+
+    public boolean unPark(Object Vehicle) {
+        if (!vehicle.isEmpty())
+            vehicle.contains(Vehicle);
+        return vehicle.remove(Vehicle);
 
     }
+
+    private boolean isAlreadyParked(Object nextVehicle) {
+        return vehicle.contains(nextVehicle);
+    }
+
+    private boolean isFull() {
+        return vehicle.size() <= capacity;
+    }
+
+
 }
+
 
