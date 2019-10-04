@@ -13,29 +13,32 @@ public class ParkingLot {
         this.availableSpace = capacity;
     }
 
-    public boolean park(Object nextVehicle) throws ParkingLotException {
-        if (isFull()) {
-            if (isAlreadyParked(nextVehicle))
+    public void park(Object nextVehicle) throws ParkingLotException {
+        if (isSpaceAvailable()) {
+            if (isAlreadyParked(nextVehicle)) {
                 throw new ParkingLotException("vehicle parked");
+            }
             vehicle.add(nextVehicle);
-            return true;
+        } else {
+            throw new ParkingLotException("parking lot is already full");
         }
-         throw new ParkingLotException("parking lot is already full");
     }
 
-    public boolean unPark(Object Vehicle) {
-        if (!vehicle.isEmpty())
-            vehicle.contains(Vehicle);
-        return vehicle.remove(Vehicle);
-
-    }
+//    public boolean unPark(Object Vehicle) throws ParkingLotException {
+//        if (!vehicle.isEmpty()) {
+//            vehicle.contains(Vehicle);
+//            return vehicle.remove(Vehicle);
+//
+//        }
+//        throw new ParkingLotException("vehicle not available in parking lot");
+//    }
 
     private boolean isAlreadyParked(Object nextVehicle) {
         return vehicle.contains(nextVehicle);
     }
 
-    private boolean isFull() {
-        return vehicle.size() <= capacity;
+    private boolean isSpaceAvailable() {
+        return vehicle.size() < capacity;
     }
 
 
