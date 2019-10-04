@@ -88,33 +88,30 @@ public class ParkingLotTest {
         parkingLot.park(vehicleTwo);
         Assertions.assertTrue(dummyOwner.wasCalled);
 
-
     }
 
-//    @Test
-//    void givenFullParkingLot_WhenCalledOneTime_ThenShouldReturnCountOne() throws AlreadyParkedException, ParkingLotFullException {
-//        DummyOwner dummyOwner = new DummyOwner();
-//        ParkingLot parkingLot = new ParkingLot(2, dummyOwner);
-//        Object vehicleOne = new Object();
-//        Object vehicleTwo = new Object();
-//        parkingLot.park(vehicleOne);
-//        parkingLot.park(vehicleTwo);
-//        Assertions.assertEquals(1, dummyOwner.noOfTimeNotified);
-//
-//
-//    }
+    @Test
+    void givenFullParkingLot_WhenInformToOwner_ThenShouldGetCalledOne() throws AlreadyParkedException, ParkingLotFullException {
+        DummyOwner dummyOwner = new DummyOwner();
+        ParkingLot parkingLot = new ParkingLot(2, dummyOwner);
+        Object vehicleOne = new Object();
+        Object vehicleTwo = new Object();
+        parkingLot.park(vehicleOne);
+        parkingLot.park(vehicleTwo);
+        Assertions.assertEquals(1, dummyOwner.noOfTimeNotified);
+
+    }
 
     public class DummyOwner extends Owner {
 
         private boolean wasCalled = false;
-//        int noOfTimeNotified = 0;
+        int noOfTimeNotified = 0;
 
         @Override
         public void notifyParkingLotIsFull() {
             wasCalled = true;
 //            noOfTimeNotified++;
-//            noOfTimeNotified = noOfTimeNotified + 1;
-
+            noOfTimeNotified = noOfTimeNotified + 1;
         }
 
 
