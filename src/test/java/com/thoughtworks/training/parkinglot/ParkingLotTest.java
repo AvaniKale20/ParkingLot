@@ -12,15 +12,17 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenParkingLot_WhenPark_ThenShouldNotPark() throws ParkingLotException {
+    void givenParkingLot_WhenParkTwoDifferentObject_ThenShouldPark() throws ParkingLotException {
         ParkingLot parkingLot = new ParkingLot(2);
-        parkingLot.park(new Object());
+        Object objectOne = new Object();
+        Object objectTwo = new Object();
+        parkingLot.park(objectOne);
 
-        assertDoesNotThrow(() -> parkingLot.park(new Object()));
+        assertDoesNotThrow(() -> parkingLot.park(objectTwo));
     }
 
     @Test
-    void givenParkingLot_WhenParkTwoSame_ThenShouldNotPark() throws ParkingLotException {
+    void givenParkingLot_WhenParkOneSameObject_ThenShouldNotPark() throws ParkingLotException {
         ParkingLot parkingLot = new ParkingLot(2);
         Object objectOne = new Object();
         parkingLot.park(objectOne);
@@ -29,7 +31,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenParkingLot_WhenUnParkVehicle_ThenShouldReturnOneVehicle() throws ParkingLotException {
+    void givenParkingLot_WhenUnParkOneVehicle_ThenShouldReturnOneVehicle() throws ParkingLotException {
         ParkingLot parkingLot = new ParkingLot(2);
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -40,7 +42,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenUnParkTheVehicle_ThenSholudReturnTwoVehicle() throws ParkingLotException {
+    void whenUnParkTheTwoVehicle_ThenShouldReturnTwoVehicle() throws ParkingLotException {
         ParkingLot parkingLot = new ParkingLot(2);
 
         Object vehicleOne = new Object();
@@ -54,7 +56,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenAddTwoVehicle_WhenUnParkSimilarVehicleFromParkingLot_ThenShouldThrowException() throws ParkingLotException {
+    void givenAddTwoVehicle_WhenUnParkOneSimilarVehicleFromParkingLot_ThenShouldThrowException() throws ParkingLotException {
         ParkingLot parkingLot = new ParkingLot(2);
 
         Object vehicleOne = new Object();
@@ -65,7 +67,7 @@ public class ParkingLotTest {
         assertEquals(vehicleOne, parkingLot.unPark(vehicleOne));
         assertEquals(vehicleTwo, parkingLot.unPark(vehicleTwo));
 
-        assertThrows(ParkingLotException.class, () -> parkingLot.unPark(vehicleTwo), "similar vehicle can not Unpark");
+        assertThrows(ParkingLotException.class, () -> parkingLot.unPark(vehicleTwo), "Vehicle already un park from parkingLot  ");
 
 
     }
