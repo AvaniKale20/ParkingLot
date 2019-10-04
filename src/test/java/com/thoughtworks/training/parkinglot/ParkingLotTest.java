@@ -31,7 +31,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenParkingLot_WhenUnParkOneVehicle_ThenShouldReturnOneVehicle() throws ParkingLotException {
+    void givenParkingLot_WhenUnParkingAParkedVehicle_ThenShouldReturnThatVehicle() throws ParkingLotException {
         ParkingLot parkingLot = new ParkingLot(2);
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
