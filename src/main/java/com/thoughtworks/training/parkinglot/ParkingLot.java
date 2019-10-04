@@ -24,14 +24,12 @@ public class ParkingLot {
         }
     }
 
-//    public boolean unPark(Object Vehicle) throws ParkingLotException {
-//        if (!vehicle.isEmpty()) {
-//            vehicle.contains(Vehicle);
-//            return vehicle.remove(Vehicle);
-//
-//        }
-//        throw new ParkingLotException("vehicle not available in parking lot");
-//    }
+    public Object unPark(Object Vehicle) throws ParkingLotException {
+        if (vehicle.contains(Vehicle)) {
+            return vehicle.remove(vehicle.indexOf(Vehicle));
+        }
+        throw new ParkingLotException("vehicle not available in parking lot");
+    }
 
     private boolean isAlreadyParked(Object nextVehicle) {
         return vehicle.contains(nextVehicle);

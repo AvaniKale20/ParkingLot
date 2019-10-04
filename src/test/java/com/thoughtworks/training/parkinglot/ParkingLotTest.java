@@ -22,9 +22,20 @@ public class ParkingLotTest {
     @Test
     void givenParkingLot_WhenParkTwoSame_ThenShouldNotPark() throws ParkingLotException {
         ParkingLot parkingLot = new ParkingLot(2);
-        Object object1 = new Object();
-        parkingLot.park(object1);
+        Object objectOne = new Object();
+        parkingLot.park(objectOne);
 
-        assertThrows(ParkingLotException.class, () -> parkingLot.park(object1), "similar object can not allowed");
+        assertThrows(ParkingLotException.class, () -> parkingLot.park(objectOne), "similar object can not allowed");
+    }
+
+    @Test
+    void givenParkingLot_WhenUnParkVehicle_ThenShouldReturnOneVehicle() throws ParkingLotException {
+        ParkingLot parkingLot = new ParkingLot(2);
+        Object vehicleOne = new Object();
+        Object vehicleTwo = new Object();
+        parkingLot.park(vehicleOne);
+        parkingLot.park(vehicleTwo);
+
+        assertEquals(vehicleOne, parkingLot.unPark(vehicleOne));
     }
 }
