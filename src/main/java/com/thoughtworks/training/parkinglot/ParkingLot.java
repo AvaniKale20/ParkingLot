@@ -1,39 +1,46 @@
 package com.thoughtworks.training.parkinglot;
 
-import com.thoughtworks.training.parkinglot.exceptions.ParkedException;
-import com.thoughtworks.training.parkinglot.exceptions.AlreadyFullParkingLotException;
-import com.thoughtworks.training.parkinglot.exceptions.SimilarObjectException;
+import com.thoughtworks.training.parkinglot.exceptions.AlreadyParkedException;
+import com.thoughtworks.training.parkinglot.exceptions.ParkingLotFullException;
+import com.thoughtworks.training.parkinglot.exceptions.ObjectNotParkedException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ParkingLot {
     private int capacity;
-    private int availableSpace;
+    private Owner owner;
+    private String message = "ParkingLot is full";
+
     public List<Object> vehicle = new ArrayList<>();
 
-    public ParkingLot(int capacity) {
+    public ParkingLot(int capacity, Owner owner) {
         this.capacity = capacity;
-        this.availableSpace = capacity;
+        this.owner = owner;
     }
 
-    public void park(Object nextVehicle) throws ParkedException, AlreadyFullParkingLotException {
+    public void park(Object nextVehicle) throws AlreadyParkedException, ParkingLotFullException {
         if (isSpaceAvailable()) {
             if (isAlreadyParked(nextVehicle)) {
-                throw new ParkedException("vehicle parked");
+                throw new AlreadyParkedException("vehicle parked");
             }
             vehicle.add(nextVehicle);
         } else {
-            throw new AlreadyFullParkingLotException("parking lot is already full");
+            throw new ParkingLotFullException("parking lot is already full");
         }
+
+        if (vehicle.size() == capacity) {
+            owner.notifyParkingLotIsFull();
+        }
+
     }
 
 
-    public Object unPark(Object Vehicle) throws SimilarObjectException {
+    public Object unPark(Object Vehicle) throws ObjectNotParkedException {
         if (vehicle.contains(Vehicle)) {
             return vehicle.remove(vehicle.indexOf(Vehicle));
         }
-        throw new SimilarObjectException("vehicle not available in parking lot");
+        throw new ObjectNotParkedException("vehicle not available in parking lot");
     }
 
     private boolean isAlreadyParked(Object nextVehicle) {
