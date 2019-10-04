@@ -1,5 +1,9 @@
 package com.thoughtworks.training.parkinglot;
 
+import com.thoughtworks.training.parkinglot.exceptions.ParkedException;
+import com.thoughtworks.training.parkinglot.exceptions.AlreadyFullParkingLotException;
+import com.thoughtworks.training.parkinglot.exceptions.SimilarObjectException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,23 +17,23 @@ public class ParkingLot {
         this.availableSpace = capacity;
     }
 
-    public void park(Object nextVehicle) throws ParkingLotException {
+    public void park(Object nextVehicle) throws ParkedException, AlreadyFullParkingLotException {
         if (isSpaceAvailable()) {
             if (isAlreadyParked(nextVehicle)) {
-                throw new ParkingLotException("vehicle parked");
+                throw new ParkedException("vehicle parked");
             }
             vehicle.add(nextVehicle);
         } else {
-            throw new ParkingLotException("parking lot is already full");
+            throw new AlreadyFullParkingLotException("parking lot is already full");
         }
     }
 
 
-    public Object unPark(Object Vehicle) throws ParkingLotException {
+    public Object unPark(Object Vehicle) throws SimilarObjectException {
         if (vehicle.contains(Vehicle)) {
             return vehicle.remove(vehicle.indexOf(Vehicle));
         }
-        throw new ParkingLotException("vehicle not available in parking lot");
+        throw new SimilarObjectException("vehicle not available in parking lot");
     }
 
     private boolean isAlreadyParked(Object nextVehicle) {
