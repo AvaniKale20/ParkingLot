@@ -39,7 +39,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenParkingLot_WhenUnParkTwoVehicle_ThenShouldUnPark() throws ParkingLotException {
+    void givenParkingLot_WhenUnParkOneVehicle_ThenShouldUnPark() throws ParkingLotException {
         ParkingLot parkingLot = new ParkingLot(2);
         Object vehicle1 = parkingLot.park(new Object());
         Object vehicle2 = parkingLot.park(new Object());
@@ -47,6 +47,16 @@ public class ParkingLotTest {
         assertFalse(parkingLot.unPark(vehicle1));
         assertFalse(parkingLot.unPark(vehicle2));
 
+    }
+
+    @Test
+    void givenParkingLot_WhenUnParkTwoVehicle_ThenShouldUnPark() throws ParkingLotException {
+        ParkingLot parkingLot = new ParkingLot(2);
+        Object vehicle1 = parkingLot.park(new Object());
+        Object vehicle2 = parkingLot.park(new Object());
+
+        assertFalse(parkingLot.unPark(vehicle1));
+        assertFalse(parkingLot.unPark(vehicle2));
 
     }
 }

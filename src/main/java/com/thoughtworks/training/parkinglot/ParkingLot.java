@@ -20,7 +20,7 @@ public class ParkingLot {
             vehicle.add(nextVehicle);
             return true;
         }
-        return false;
+         throw new ParkingLotException("parking lot is already full");
     }
 
     public boolean unPark(Object Vehicle) {
