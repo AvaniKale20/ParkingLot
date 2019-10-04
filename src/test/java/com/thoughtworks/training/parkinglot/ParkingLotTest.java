@@ -38,4 +38,17 @@ public class ParkingLotTest {
 
         assertEquals(vehicleOne, parkingLot.unPark(vehicleOne));
     }
+
+    @Test
+    void givenUnParkTheVehicle_ThenSholudReturnTwoVehicle() throws ParkingLotException {
+        ParkingLot parkingLot = new ParkingLot(2);
+        Object vehicleOne = new Object();
+        Object vehicleTwo = new Object();
+        parkingLot.park(vehicleOne);
+        parkingLot.park(vehicleTwo);
+
+        assertEquals(vehicleOne, parkingLot.unPark(vehicleOne));
+        assertEquals(vehicleTwo, parkingLot.unPark(vehicleTwo));
+
+    }
 }
