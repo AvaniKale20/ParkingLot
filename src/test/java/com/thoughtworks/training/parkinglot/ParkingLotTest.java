@@ -18,4 +18,13 @@ public class ParkingLotTest {
 
         assertDoesNotThrow(() -> parkingLot.park(new Object()));
     }
+
+    @Test
+    void givenParkingLot_WhenParkTwoSame_ThenShouldNotPark() throws ParkingLotException {
+        ParkingLot parkingLot = new ParkingLot(2);
+        Object object1 = new Object();
+        parkingLot.park(object1);
+
+        assertThrows(ParkingLotException.class, () -> parkingLot.park(object1), "similar object can not allowed");
+    }
 }
