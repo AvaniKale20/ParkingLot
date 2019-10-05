@@ -43,6 +43,22 @@ class DummySecurity implements Subscriber {
     }
 }
 
+class DummyPerson implements Subscriber {
+
+    public int notifyParkingLotFull = 0;
+    public int notifyParkingLotAvailable = 0;
+
+    @Override
+    public void notifyParkingLotIsAvailable() {
+        notifyParkingLotAvailable++;
+    }
+
+    @Override
+    public void notifyParkingLotIsFull() {
+        notifyParkingLotFull++;
+    }
+
+}
 
 public class ParkingLotTest {
     // TODO - we don't want to make real owner in your test.
@@ -238,7 +254,6 @@ public class ParkingLotTest {
 
     @Test
     void givenFullParkingLot_WhenUnParkVehicle_ThenInformTheOwnerAndSecurityGuard() throws Exception {
-        List<Subscriber> list = new ArrayList<>();
         DummyOwner owner = new DummyOwner();
         DummySecurity security = new DummySecurity();
 
@@ -254,7 +269,31 @@ public class ParkingLotTest {
 
         parkingLot.unPark(vehicleOne);
         assertEquals(1, owner.notifyParkingLotAvailable);
-        assertEquals(1, owner.notifyParkingLotAvailable);
+        assertEquals(1, security.notifyParkingLotAvailable);
+    }
+//For Register person
+    @Test
+    void givenParkingLot_WhenPersonRegister_ThenNotify() throws Exception {
+        List<Subscriber> list = new ArrayList<>();
+        DummyOwner owner = new DummyOwner();
+        DummySecurity security = new DummySecurity();
+        list.add(owner);
+        list.add(security);
+
+        ParkingLot parkingLot = new ParkingLot(2, list);
+
+        //1st resister
+        DummyPerson person = new DummyPerson();
+        parkingLot.registor(person);
+
+        //then park vehicle
+        Object vehicleOne = new Object();
+        Object vehicleTwo = new Object();
+        parkingLot.park(vehicleOne);
+        parkingLot.park(vehicleTwo);
+
+        assertEquals(1, owner.notifyParkingLotFull);
+        assertEquals(1, person.notifyParkingLotFull);
 
 
     }

@@ -9,7 +9,6 @@ import java.util.List;
 
 public class ParkingLot {
     private int capacity;
-    private Subscriber subscriber;
     private List<Subscriber> parkingLotSubscriber;
 
     public List<Object> vehicle = new ArrayList<>();
@@ -33,9 +32,6 @@ public class ParkingLot {
             vehicle.add(nextVehicle);
 
             if (informParkingLotIsFull()) {
-                if (subscriber != null) {
-                    subscriber.notifyParkingLotIsFull();
-                }
                 for (Subscriber p1 : parkingLotSubscriber)
                     p1.notifyParkingLotIsFull();
             }
@@ -50,9 +46,6 @@ public class ParkingLot {
             Object storeVehicle = vehicle.remove(vehicle.indexOf(Vehicle));
 
             if (informSpaceIsAvailable()) {
-                if (subscriber != null) {
-                    subscriber.notifyParkingLotIsAvailable();
-                }
                 for (Subscriber p : parkingLotSubscriber)
                     p.notifyParkingLotIsAvailable();
             }
@@ -78,7 +71,9 @@ public class ParkingLot {
         return vehicle.size() < capacity;
     }
 
-
+    public void registor(Subscriber newPerson) {
+        parkingLotSubscriber.add(newPerson);
+    }
 }
 
 
