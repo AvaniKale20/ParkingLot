@@ -372,4 +372,25 @@ public class ParkingLotTest {
         assertEquals(1, owner.notifyParkingLotFull);
 
     }
+
+    @Test
+    void givenParkingLot_WhenUnRegisterAnyPerson_ThenDoNotInformToPerson() throws Exception {
+        List<Subscriber> list = new ArrayList<>();
+
+        ParkingLot parkingLot = new ParkingLot(2, list);
+
+        //1st un resister
+        DummyPerson person = new DummyPerson();
+        parkingLot.unRegistor(person);
+
+        //then park vehicle
+        Object vehicleOne = new Object();
+        Object vehicleTwo = new Object();
+        parkingLot.park(vehicleOne);
+        parkingLot.park(vehicleTwo);
+        parkingLot.unPark(vehicleOne);
+
+        assertNotEquals(1, person.notifyParkingLotFull);
+
+    }
 }
