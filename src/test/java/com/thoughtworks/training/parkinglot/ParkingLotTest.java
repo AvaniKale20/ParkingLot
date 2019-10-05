@@ -176,5 +176,20 @@ public class ParkingLotTest {
 
     }
 
+    @Test
+    void givenFullParkingLot_WhenUnParkOneVehicle__ThenInformTheSecurityGuard() throws Exception {
+        DummySecurity security = new DummySecurity();
+        ParkingLot parkingLot = new ParkingLot(2, security);
 
+        Object vehicleOne = new Object();
+        Object vehicleTwo = new Object();
+        parkingLot.park(vehicleOne);
+        parkingLot.park(vehicleTwo);
+        assertEquals(1, security.informParkingLotFull);
+
+        parkingLot.unPark(vehicleOne);
+        assertEquals(1, security.informParkingLotAvailable);
+
+
+    }
 }
