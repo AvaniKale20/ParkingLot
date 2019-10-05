@@ -1,7 +1,7 @@
 package com.thoughtworks.training.parkinglot.exceptions;
 
 public class ObjectNotParkedException extends Exception {
-    public ObjectNotParkedException() {
-        super();
+    public ObjectNotParkedException(String s) {
+        super(s);
     }
 }
