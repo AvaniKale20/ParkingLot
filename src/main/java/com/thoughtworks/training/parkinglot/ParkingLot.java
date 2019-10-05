@@ -23,12 +23,12 @@ public class ParkingLot {
     public void park(Object nextVehicle) throws AlreadyParkedException, ParkingLotFullException {
         if (isSpaceAvailable()) {
             if (isAlreadyParked(nextVehicle)) {
-                throw new AlreadyParkedException("vehicle parked");
+                throw new AlreadyParkedException();
             }
             vehicle.add(nextVehicle);
             informTheOwnerParkingLotIsFull();
         } else {
-            throw new ParkingLotFullException("parking lot is already full");
+            throw new ParkingLotFullException();
         }
     }
 
@@ -42,7 +42,7 @@ public class ParkingLot {
             }
             return storeVehicle;
         }
-        throw new ObjectNotParkedException("vehicle not available in parking lot");
+        throw new ObjectNotParkedException();
     }
 
 
