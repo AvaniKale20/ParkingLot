@@ -10,7 +10,6 @@ import java.util.List;
 public class ParkingLot {
     private int capacity;
     private Owner owner;
-    private String message = "ParkingLot is full";
 
     public List<Object> vehicle = new ArrayList<>();
 
@@ -23,15 +22,14 @@ public class ParkingLot {
     public void park(Object nextVehicle) throws AlreadyParkedException, ParkingLotFullException {
         if (isSpaceAvailable()) {
             if (isAlreadyParked(nextVehicle)) {
-                throw new AlreadyParkedException("vehicle parked");
+                throw new AlreadyParkedException();
             }
             vehicle.add(nextVehicle);
             informTheOwnerParkingLotIsFull();
         } else {
-            throw new ParkingLotFullException("parking lot is already full");
+            throw new ParkingLotFullException();
         }
     }
-
 
     public Object unPark(Object Vehicle) throws ObjectNotParkedException {
         if (isAlreadyParked(Vehicle)) {
@@ -42,7 +40,7 @@ public class ParkingLot {
             }
             return storeVehicle;
         }
-        throw new ObjectNotParkedException("vehicle not available in parking lot");
+        throw new ObjectNotParkedException();
     }
 
 
@@ -57,6 +55,7 @@ public class ParkingLot {
             owner.notifyParkingLotIsFull();
         }
     }
+
 
     private boolean isAlreadyParked(Object nextVehicle) {
         return vehicle.contains(nextVehicle);

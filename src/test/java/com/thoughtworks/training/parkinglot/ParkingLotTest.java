@@ -55,7 +55,7 @@ public class ParkingLotTest {
         Object objectOne = new Object();
         parkingLot.park(objectOne);
 
-        assertThrows(AlreadyParkedException.class, () -> parkingLot.park(objectOne), "similar object can not allowed");
+        assertThrows(AlreadyParkedException.class, () -> parkingLot.park(objectOne));
     }
 
     @Test
@@ -95,7 +95,7 @@ public class ParkingLotTest {
         assertEquals(vehicleOne, parkingLot.unPark(vehicleOne));
         assertEquals(vehicleTwo, parkingLot.unPark(vehicleTwo));
 
-        assertThrows(ObjectNotParkedException.class, () -> parkingLot.unPark(vehicleTwo), "Vehicle already un park from parkingLot  ");
+        assertThrows(ObjectNotParkedException.class, () -> parkingLot.unPark(vehicleTwo));
 
 
     }
