@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DummyOwner extends Owner {
 
-    public boolean wasCalled = false;
+    public boolean wasCalled = false; // TODO - maybe wasCalled is not needed.
     int notifyParkingLotFull = 0;
     int notifyParkingLotAvailable = 0;
 
@@ -23,14 +23,13 @@ class DummyOwner extends Owner {
     public void notifyParkingLotIsFull() {
         wasCalled = true;
         notifyParkingLotFull++;
-
     }
 
 
 }
 
 public class ParkingLotTest {
-    Owner owner = new Owner();
+    Owner owner = new Owner(); // TODO - we don't want to make real owner in your test.
     DummyOwner dummyOwner = new DummyOwner();
 
     @Test
@@ -39,8 +38,9 @@ public class ParkingLotTest {
         assertDoesNotThrow(() -> parkingLot.park(new Object()));
     }
 
+    // TODO - change to base class Exception
     @Test
-    void givenParkingLot_WhenParkTwoDifferentObject_ThenShouldPark() throws AlreadyParkedException, ParkingLotFullException {
+    void givenParkingLot_WhenParkTwoDifferentObject_ThenShouldPark() throws Exception {
         ParkingLot parkingLot = new ParkingLot(2, owner);
         Object objectOne = new Object();
         Object objectTwo = new Object();
@@ -50,16 +50,16 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenParkingLot_WhenParkOneSameObject_ThenShouldNotPark() throws AlreadyParkedException, ParkingLotFullException {
+    void givenParkingLot_WhenParkOneSameObject_ThenShouldNotPark() throws Exception {
         ParkingLot parkingLot = new ParkingLot(2, owner);
         Object objectOne = new Object();
         parkingLot.park(objectOne);
 
-        assertThrows(AlreadyParkedException.class, () -> parkingLot.park(objectOne), "similar object can not allowed");
+        assertThrows(AlreadyParkedException.class, () -> parkingLot.park(objectOne));
     }
 
     @Test
-    void givenParkingLot_WhenUnParkingAParkedVehicle_ThenShouldReturnThatVehicle() throws ObjectNotParkedException, AlreadyParkedException, ParkingLotFullException {
+    void givenParkingLot_WhenUnParkingAParkedVehicle_ThenShouldReturnThatVehicle() throws Exception {
         ParkingLot parkingLot = new ParkingLot(2, owner);
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -70,21 +70,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenParkingLot_WhenUnParkingATwoParkedVehicle_ThenShouldReturnThatVehicle() throws ObjectNotParkedException, AlreadyParkedException, ParkingLotFullException {
-        ParkingLot parkingLot = new ParkingLot(2, owner);
-
-        Object vehicleOne = new Object();
-        Object vehicleTwo = new Object();
-        parkingLot.park(vehicleOne);
-        parkingLot.park(vehicleTwo);
-
-        assertEquals(vehicleOne, parkingLot.unPark(vehicleOne));
-        assertEquals(vehicleTwo, parkingLot.unPark(vehicleTwo));
-
-    }
-
-    @Test
-    void givenAddTwoVehicle_WhenUnParkOneSimilarVehicleFromParkingLot_ThenShouldThrowException() throws ObjectNotParkedException, ParkingLotFullException, AlreadyParkedException {
+    void givenParkingLot_WhenUnParkingATwoParkedVehicle_ThenShouldReturnThatVehicle() throws Exception {
         ParkingLot parkingLot = new ParkingLot(2, owner);
 
         Object vehicleOne = new Object();
@@ -95,13 +81,27 @@ public class ParkingLotTest {
         assertEquals(vehicleOne, parkingLot.unPark(vehicleOne));
         assertEquals(vehicleTwo, parkingLot.unPark(vehicleTwo));
 
-        assertThrows(ObjectNotParkedException.class, () -> parkingLot.unPark(vehicleTwo), "Vehicle already un park from parkingLot  ");
+    }
+
+    @Test
+    void givenAddTwoVehicle_WhenUnParkOneSimilarVehicleFromParkingLot_ThenShouldThrowException() throws Exception {
+        ParkingLot parkingLot = new ParkingLot(2, owner);
+
+        Object vehicleOne = new Object();
+        Object vehicleTwo = new Object();
+        parkingLot.park(vehicleOne);
+        parkingLot.park(vehicleTwo);
+
+        assertEquals(vehicleOne, parkingLot.unPark(vehicleOne));
+        assertEquals(vehicleTwo, parkingLot.unPark(vehicleTwo));
+
+        assertThrows(ObjectNotParkedException.class, () -> parkingLot.unPark(vehicleTwo));
 
 
     }
 
     @Test
-    void givenParkingLot_WhenIsFull__ThenInformTheOwner() throws AlreadyParkedException, ParkingLotFullException {
+    void givenParkingLot_WhenIsFull__ThenInformTheOwner() throws Exception {
         ParkingLot parkingLot = new ParkingLot(2, dummyOwner);
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -112,7 +112,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenFullParkingLot_WhenInformOwner_ThenShouldOwnerGetNotifyOne() throws AlreadyParkedException, ParkingLotFullException {
+    void givenFullParkingLot_WhenInformOwner_ThenShouldOwnerGetNotifyOne() throws Exception {
         ParkingLot parkingLot = new ParkingLot(2, dummyOwner);
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -123,7 +123,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenFullParkingLot_WhenUnParkOneVehicle_ThenNotifyToOwner() throws AlreadyParkedException, ParkingLotFullException, ObjectNotParkedException {
+    void givenFullParkingLot_WhenUnParkOneVehicle_ThenNotifyToOwner() throws Exception {
         ParkingLot parkingLot = new ParkingLot(2, dummyOwner);
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
