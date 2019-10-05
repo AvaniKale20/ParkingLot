@@ -5,13 +5,13 @@ package com.thoughtworks.training.parkinglot;
     abstract class - if you know only some behavior concretely / exactly, but don't know the rest (for rest, only contract is known). ( 5 methods - 3 methods. 2 method implementation unknown)
     interface - only contract is known.
  */
-public class Owner {
 
+public interface Owner {
 
-    public void notifyParkingLotIsFull() {
-    }
+    void notifyParkingLotIsFull();
 
+    void notifyParkingLotIsAvailable();
 
-    public void notifyParkingLotIsAvailable() {
-    }
 }
+
+

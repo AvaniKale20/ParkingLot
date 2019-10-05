@@ -10,7 +10,6 @@ import java.util.List;
 public class ParkingLot {
     private int capacity;
     private Owner owner;
-    private String message = "ParkingLot is full";
 
     public List<Object> vehicle = new ArrayList<>();
 
