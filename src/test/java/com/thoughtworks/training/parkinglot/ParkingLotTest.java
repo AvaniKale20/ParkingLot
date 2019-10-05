@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DummyOwner extends Owner {
 
-    public boolean wasCalled = false; // TODO - maybe wasCalled is not needed.
+//    public boolean wasCalled = false; // TODO - maybe wasCalled is not needed.
     int notifyParkingLotFull = 0;
     int notifyParkingLotAvailable = 0;
 
@@ -21,7 +21,7 @@ class DummyOwner extends Owner {
 
     @Override
     public void notifyParkingLotIsFull() {
-        wasCalled = true;
+//        wasCalled = true;
         notifyParkingLotFull++;
     }
 
@@ -107,7 +107,7 @@ public class ParkingLotTest {
         Object vehicleTwo = new Object();
         parkingLot.park(vehicleOne);
         parkingLot.park(vehicleTwo);
-        Assertions.assertTrue(dummyOwner.wasCalled);
+        Assertions.assertEquals(1,dummyOwner.notifyParkingLotFull);
 
     }
 
