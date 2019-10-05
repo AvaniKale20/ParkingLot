@@ -6,7 +6,7 @@ package com.thoughtworks.training.parkinglot;
     interface - only contract is known.
  */
 
-public interface Owner {
+public interface Subscriber {
 
     void notifyParkingLotIsFull();
 

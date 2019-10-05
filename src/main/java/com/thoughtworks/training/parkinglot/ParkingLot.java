@@ -9,15 +9,21 @@ import java.util.List;
 
 public class ParkingLot {
     private int capacity;
-    private Owner owner;
+    private Subscriber subscriber;
+    private List<Subscriber> parkingLotSubscriber;
 
     public List<Object> vehicle = new ArrayList<>();
 
-    public ParkingLot(int capacity, Owner owner) {
+    public ParkingLot(int capacity, List<Subscriber> parkingLotSubscriber) {
         this.capacity = capacity;
-        this.owner = owner;
+        this.parkingLotSubscriber = parkingLotSubscriber;
     }
 
+    public ParkingLot(int capacity, Subscriber subscriber) {
+        this.capacity = capacity;
+        this.subscriber = subscriber;
+        this.parkingLotSubscriber = new ArrayList<>();
+    }
 
     public void park(Object nextVehicle) throws AlreadyParkedException, ParkingLotFullException {
         if (isSpaceAvailable()) {
@@ -25,7 +31,14 @@ public class ParkingLot {
                 throw new AlreadyParkedException();
             }
             vehicle.add(nextVehicle);
-            informTheOwnerParkingLotIsFull();
+
+            if (informParkingLotIsFull()) {
+                if (subscriber != null) {
+                    subscriber.notifyParkingLotIsFull();
+                }
+                for (Subscriber p1 : parkingLotSubscriber)
+                    p1.notifyParkingLotIsFull();
+            }
         } else {
             throw new ParkingLotFullException();
         }
@@ -36,8 +49,12 @@ public class ParkingLot {
         if (isAlreadyParked(Vehicle)) {
             Object storeVehicle = vehicle.remove(vehicle.indexOf(Vehicle));
 
-            if (vehicle.size() == capacity - 1) {
-                informToOwnerParkingLotAvailable();
+            if (informSpaceIsAvailable()) {
+                if (subscriber != null) {
+                    subscriber.notifyParkingLotIsAvailable();
+                }
+                for (Subscriber p : parkingLotSubscriber)
+                    p.notifyParkingLotIsAvailable();
             }
             return storeVehicle;
         }
@@ -45,16 +62,12 @@ public class ParkingLot {
     }
 
 
-    private void informToOwnerParkingLotAvailable() {
-        if (vehicle.size() == capacity - 1) {
-            owner.notifyParkingLotIsAvailable();
-        }
+    private boolean informSpaceIsAvailable() {
+        return (vehicle.size() == capacity - 1);
     }
 
-    private void informTheOwnerParkingLotIsFull() {
-        if (vehicle.size() == capacity) {
-            owner.notifyParkingLotIsFull();
-        }
+    private boolean informParkingLotIsFull() {
+        return (vehicle.size() == capacity);
     }
 
     private boolean isAlreadyParked(Object nextVehicle) {
