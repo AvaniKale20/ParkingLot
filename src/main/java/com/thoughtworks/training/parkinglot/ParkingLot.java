@@ -19,11 +19,11 @@ public class ParkingLot {
         this.parkingLotSubscriber = parkingLotSubscriber;
     }
 
-    public ParkingLot(int capacity, Subscriber subscriber) {
-        this.capacity = capacity;
-        this.subscriber = subscriber;
-        this.parkingLotSubscriber = new ArrayList<>();
-    }
+//    public ParkingLot(int capacity, Subscriber subscriber) {
+//        this.capacity = capacity;
+//        this.subscriber = subscriber;
+//        this.parkingLotSubscriber = new ArrayList<>();
+//    }
 
     public void park(Object nextVehicle) throws AlreadyParkedException, ParkingLotFullException {
         if (isSpaceAvailable()) {

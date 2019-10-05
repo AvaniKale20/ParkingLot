@@ -5,7 +5,9 @@ import com.thoughtworks.training.parkinglot.exceptions.ObjectNotParkedException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,15 +49,22 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLot_WhenPark_ThenShouldBePark() {
+        List<Subscriber> list = new ArrayList<>();
         DummyOwner owner = new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(2, owner);
+        list.add(owner);
+
+        ParkingLot parkingLot = new ParkingLot(2, list);
         assertDoesNotThrow(() -> parkingLot.park(new Object()));
     }
 
     @Test
     void givenParkingLot_WhenParkTwoDifferentObject_ThenShouldPark() throws Exception {
+        List<Subscriber> list = new ArrayList<>();
         DummyOwner owner = new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(2, owner);
+        list.add(owner);
+
+        ParkingLot parkingLot = new ParkingLot(2, list);
+
         Object objectOne = new Object();
         Object objectTwo = new Object();
         parkingLot.park(objectOne);
@@ -65,8 +74,11 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLot_WhenParkOneSameObject_ThenShouldNotPark() throws Exception {
+        List<Subscriber> list = new ArrayList<>();
         DummyOwner owner = new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(2, owner);
+        list.add(owner);
+
+        ParkingLot parkingLot = new ParkingLot(2, list);
         Object objectOne = new Object();
         parkingLot.park(objectOne);
 
@@ -75,8 +87,10 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLot_WhenUnParkingAParkedVehicle_ThenShouldReturnThatVehicle() throws Exception {
+        List<Subscriber> list = new ArrayList<>();
         DummyOwner owner = new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(2, owner);
+        list.add(owner);
+        ParkingLot parkingLot = new ParkingLot(2, list);
 
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -88,8 +102,10 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLot_WhenUnParkingATwoParkedVehicle_ThenShouldReturnThatVehicle() throws Exception {
+        List<Subscriber> list = new ArrayList<>();
         DummyOwner owner = new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(2, owner);
+        list.add(owner);
+        ParkingLot parkingLot = new ParkingLot(2, list);
 
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -103,8 +119,10 @@ public class ParkingLotTest {
 
     @Test
     void givenAddTwoVehicle_WhenUnParkOneSimilarVehicleFromParkingLot_ThenShouldThrowException() throws Exception {
+        List<Subscriber> list = new ArrayList<>();
         DummyOwner owner = new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(2, owner);
+        list.add(owner);
+        ParkingLot parkingLot = new ParkingLot(2, list);
 
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -120,8 +138,10 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLot_WhenIsFull__ThenInformTheOwner() throws Exception {
+        List<Subscriber> list = new ArrayList<>();
         DummyOwner owner = new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(2, owner);
+        list.add(owner);
+        ParkingLot parkingLot = new ParkingLot(2, list);
 
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -134,8 +154,10 @@ public class ParkingLotTest {
 
     @Test
     void givenFullParkingLot_WhenInformOwner_ThenShouldOwnerGetNotifyOne() throws Exception {
+        List<Subscriber> list = new ArrayList<>();
         DummyOwner owner = new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(2, owner);
+        list.add(owner);
+        ParkingLot parkingLot = new ParkingLot(2, list);
 
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -148,8 +170,10 @@ public class ParkingLotTest {
 
     @Test
     void givenFullParkingLot_WhenUnParkOneVehicle_ThenNotifyToOwner() throws Exception {
+        List<Subscriber> list = new ArrayList<>();
         DummyOwner owner = new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(2, owner);
+        list.add(owner);
+        ParkingLot parkingLot = new ParkingLot(2, list);
 
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -165,8 +189,10 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLot_WhenIsFull__ThenInformTheSecurityGuard() throws Exception {
+        List<Subscriber> list = new ArrayList<>();
         DummySecurity security = new DummySecurity();
-        ParkingLot parkingLot = new ParkingLot(2, security);
+        list.add(security);
+        ParkingLot parkingLot = new ParkingLot(2, list);
 
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -179,8 +205,10 @@ public class ParkingLotTest {
 
     @Test
     void givenFullParkingLot_WhenUnParkOneVehicle__ThenInformTheSecurityGuard() throws Exception {
+        List<Subscriber> list = new ArrayList<>();
         DummySecurity security = new DummySecurity();
-        ParkingLot parkingLot = new ParkingLot(2, security);
+        list.add(security);
+        ParkingLot parkingLot = new ParkingLot(2, list);
 
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -210,6 +238,7 @@ public class ParkingLotTest {
 
     @Test
     void givenFullParkingLot_WhenUnParkVehicle_ThenInformTheOwnerAndSecurityGuard() throws Exception {
+        List<Subscriber> list = new ArrayList<>();
         DummyOwner owner = new DummyOwner();
         DummySecurity security = new DummySecurity();
 
