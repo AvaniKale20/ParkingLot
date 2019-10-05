@@ -122,5 +122,17 @@ public class ParkingLotTest {
 
     }
 
+    @Test
+    void givenFullParkingLot_WhenUnParkOneVehicle_ThenNotifyToOwner() throws AlreadyParkedException, ParkingLotFullException, ObjectNotParkedException {
+        ParkingLot parkingLot = new ParkingLot(2, dummyOwner);
+        Object vehicleOne = new Object();
+        Object vehicleTwo = new Object();
 
+        parkingLot.park(vehicleOne);
+        parkingLot.park(vehicleTwo);
+        assertEquals(1, dummyOwner.notifyParkingLotFull);
+
+        parkingLot.unPark(vehicleTwo);
+        assertEquals(1, dummyOwner.notifyParkingLotAvailable);
+    }
 }
