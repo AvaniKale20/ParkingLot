@@ -349,4 +349,27 @@ public class ParkingLotTest {
 
 
     }
+
+    @Test
+    void givenParkingLot_WhenUnRegisterAnyPerson_ThenNotifyToOwner() throws Exception {
+        List<Subscriber> list = new ArrayList<>();
+        DummyOwner owner = new DummyOwner();
+        list.add(owner);
+
+        ParkingLot parkingLot = new ParkingLot(2, list);
+
+        //1st un resister
+        DummyPerson person = new DummyPerson();
+        parkingLot.unRegistor(person);
+
+        //then park vehicle
+        Object vehicleOne = new Object();
+        Object vehicleTwo = new Object();
+        parkingLot.park(vehicleOne);
+        parkingLot.park(vehicleTwo);
+        parkingLot.unPark(vehicleOne);
+
+        assertEquals(1, owner.notifyParkingLotFull);
+
+    }
 }

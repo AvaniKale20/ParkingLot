@@ -74,6 +74,10 @@ public class ParkingLot {
     public void registor(Subscriber newPerson) {
         parkingLotSubscriber.add(newPerson);
     }
+
+    public void unRegistor(Subscriber person) {
+        parkingLotSubscriber.remove(person);
+    }
 }
 
 
