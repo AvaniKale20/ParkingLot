@@ -26,15 +26,15 @@ class DummyOwner implements Owner {
 
 class DummySecurity implements Owner {
 
-
+public boolean wasCalled=false;
     @Override
     public void notifyParkingLotIsFull() {
-
+        wasCalled=true;
     }
 
     @Override
     public void notifyParkingLotIsAvailable() {
-
+        wasCalled=true;
     }
 }
 
@@ -74,6 +74,7 @@ public class ParkingLotTest {
     void givenParkingLot_WhenUnParkingAParkedVehicle_ThenShouldReturnThatVehicle() throws Exception {
         DummyOwner owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(2, owner);
+
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
         parkingLot.park(vehicleOne);
@@ -85,7 +86,6 @@ public class ParkingLotTest {
     @Test
     void givenParkingLot_WhenUnParkingATwoParkedVehicle_ThenShouldReturnThatVehicle() throws Exception {
         DummyOwner owner = new DummyOwner();
-
         ParkingLot parkingLot = new ParkingLot(2, owner);
 
         Object vehicleOne = new Object();
@@ -158,6 +158,20 @@ public class ParkingLotTest {
 
         parkingLot.unPark(vehicleTwo);
         assertEquals(1, owner.notifyParkingLotAvailable);
+
+    }
+
+    @Test
+    void givenFullParkingLot_WhenInformSecurity_ThenShouldSecurityGetNotifyOnce() throws Exception {
+        DummySecurity security = new DummySecurity();
+        ParkingLot parkingLot = new ParkingLot(2, security);
+
+        Object vehicleOne = new Object();
+        Object vehicleTwo = new Object();
+        parkingLot.park(vehicleOne);
+        parkingLot.park(vehicleTwo);
+
+        Assertions.assertTrue(security.wasCalled);
 
     }
 
