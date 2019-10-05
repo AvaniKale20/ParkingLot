@@ -11,55 +11,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DummyOwner implements Subscriber {
-
-    public int notifyParkingLotFull = 0;
-    public int notifyParkingLotAvailable = 0;
-
-    @Override
-    public void notifyParkingLotIsAvailable() {
-        notifyParkingLotAvailable++;
-    }
-
-    @Override
-    public void notifyParkingLotIsFull() {
-        notifyParkingLotFull++;
-    }
-}
-
-class DummySecurity implements Subscriber {
-
-    public int notifyParkingLotFull = 0;
-    public int notifyParkingLotAvailable = 0;
-
-    @Override
-    public void notifyParkingLotIsFull() {
-        notifyParkingLotFull++;
-    }
-
-    @Override
-    public void notifyParkingLotIsAvailable() {
-        notifyParkingLotAvailable++;
-    }
-}
-
-class DummyPerson implements Subscriber {
-
-    public int notifyParkingLotFull = 0;
-    public int notifyParkingLotAvailable = 0;
-
-    @Override
-    public void notifyParkingLotIsAvailable() {
-        notifyParkingLotAvailable++;
-    }
-
-    @Override
-    public void notifyParkingLotIsFull() {
-        notifyParkingLotFull++;
-    }
-
-}
-
 public class ParkingLotTest {
     // TODO - we don't want to make real owner in your test.
 
@@ -398,7 +349,7 @@ public class ParkingLotTest {
     void givenParkingLot_WhenUnRegisterAnyPerson_ThenInformToAll() throws Exception {
         List<Subscriber> list = new ArrayList<>();
         DummySecurity security = new DummySecurity();
-        DummyOwner owner=new DummyOwner();
+        DummyOwner owner = new DummyOwner();
         list.add(security);
         list.add(owner);
 
