@@ -2,7 +2,6 @@ package com.thoughtworks.training.parkinglot;
 
 import com.thoughtworks.training.parkinglot.exceptions.AlreadyParkedException;
 import com.thoughtworks.training.parkinglot.exceptions.ObjectNotParkedException;
-import com.thoughtworks.training.parkinglot.exceptions.ParkingLotFullException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -26,15 +25,17 @@ class DummyOwner implements Owner {
 
 class DummySecurity implements Owner {
 
-public boolean wasCalled=false;
+    int informParkingLotFull = 0;
+    int informParkingLotAvailable = 0;
+
     @Override
     public void notifyParkingLotIsFull() {
-        wasCalled=true;
+        informParkingLotFull++;
     }
 
     @Override
     public void notifyParkingLotIsAvailable() {
-        wasCalled=true;
+        informParkingLotAvailable++;
     }
 }
 
@@ -162,7 +163,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenFullParkingLot_WhenInformSecurity_ThenShouldSecurityGetNotifyOnce() throws Exception {
+    void givenParkingLot_WhenIsFull__ThenInformTheSecurityGuard() throws Exception {
         DummySecurity security = new DummySecurity();
         ParkingLot parkingLot = new ParkingLot(2, security);
 
@@ -171,8 +172,9 @@ public class ParkingLotTest {
         parkingLot.park(vehicleOne);
         parkingLot.park(vehicleTwo);
 
-        Assertions.assertTrue(security.wasCalled);
+        assertEquals(1, security.informParkingLotFull);
 
     }
+
 
 }
