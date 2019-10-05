@@ -8,8 +8,30 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+class DummyOwner extends Owner {
+
+    public boolean wasCalled = false;
+    int notifyParkingLotFull = 0;
+    int notifyParkingLotAvailable = 0;
+
+    @Override
+    public void notifyParkingLotIsAvailable() {
+        notifyParkingLotAvailable++;
+    }
+
+    @Override
+    public void notifyParkingLotIsFull() {
+        wasCalled = true;
+        notifyParkingLotFull++;
+
+    }
+
+
+}
+
 public class ParkingLotTest {
     Owner owner = new Owner();
+    DummyOwner dummyOwner = new DummyOwner();
 
     @Test
     void givenParkingLot_WhenPark_ThenShouldBePark() {
@@ -80,7 +102,6 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLot_WhenIsFull__ThenInformTheOwner() throws AlreadyParkedException, ParkingLotFullException {
-        DummyOwner dummyOwner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(2, dummyOwner);
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -91,29 +112,15 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenFullParkingLot_WhenInformToOwner_ThenShouldGetCalledOne() throws AlreadyParkedException, ParkingLotFullException {
-        DummyOwner dummyOwner = new DummyOwner();
+    void givenFullParkingLot_WhenInformOwner_ThenShouldOwnerGetNotifyOne() throws AlreadyParkedException, ParkingLotFullException {
         ParkingLot parkingLot = new ParkingLot(2, dummyOwner);
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
         parkingLot.park(vehicleOne);
         parkingLot.park(vehicleTwo);
-        Assertions.assertEquals(1, dummyOwner.noOfTimeNotified);
+        Assertions.assertEquals(1, dummyOwner.notifyParkingLotFull);
 
     }
 
-    public class DummyOwner extends Owner {
 
-        private boolean wasCalled = false;
-        int noOfTimeNotified = 0;
-
-        @Override
-        public void notifyParkingLotIsFull() {
-            wasCalled = true;
-//            noOfTimeNotified++;
-            noOfTimeNotified = noOfTimeNotified + 1;
-        }
-
-
-    }
 }

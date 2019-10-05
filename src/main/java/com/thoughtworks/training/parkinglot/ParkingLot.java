@@ -19,28 +19,43 @@ public class ParkingLot {
         this.owner = owner;
     }
 
+
     public void park(Object nextVehicle) throws AlreadyParkedException, ParkingLotFullException {
         if (isSpaceAvailable()) {
             if (isAlreadyParked(nextVehicle)) {
                 throw new AlreadyParkedException("vehicle parked");
             }
             vehicle.add(nextVehicle);
+            informTheOwnerParkingLotIsFull();
         } else {
             throw new ParkingLotFullException("parking lot is already full");
         }
-
-        if (vehicle.size() == capacity) {
-            owner.notifyParkingLotIsFull();
-        }
-
     }
 
 
     public Object unPark(Object Vehicle) throws ObjectNotParkedException {
-        if (vehicle.contains(Vehicle)) {
-            return vehicle.remove(vehicle.indexOf(Vehicle));
+        if (isAlreadyParked(Vehicle)) {
+            Object storeVehicle = vehicle.remove(vehicle.indexOf(Vehicle));
+
+            if (vehicle.size() == capacity - 1) {
+                informToOwnerParkingLotAvailable();
+            }
+            return storeVehicle;
         }
         throw new ObjectNotParkedException("vehicle not available in parking lot");
+    }
+
+
+    private void informToOwnerParkingLotAvailable() {
+        if (vehicle.size() == capacity - 1) {
+            owner.notifyParkingLotIsAvailable();
+        }
+    }
+
+    private void informTheOwnerParkingLotIsFull() {
+        if (vehicle.size() == capacity) {
+            owner.notifyParkingLotIsFull();
+        }
     }
 
     private boolean isAlreadyParked(Object nextVehicle) {
